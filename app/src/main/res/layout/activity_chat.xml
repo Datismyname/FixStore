@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EEEEEE"
+    android:layoutDirection="rtl"
+    tools:context=".ChatActivity">
+
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+        <android.support.v7.widget.Toolbar android:id="@+id/toolbar_chat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:minHeight="?android:attr/actionBarSize"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/textView_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white"
+                        android:layout_centerHorizontal="true"
+                        android:text="في انتظار تسليم الجوال للمحل"/>
+
+                    <ImageView
+                        android:id="@+id/imageView_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/button_delivery"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:soundEffectsEnabled="true"
+                        android:theme="@style/AppTheme.Button"
+                        android:text="تم التسليم" />
+
+
+                    <!--<Button
+                        android:id="@+id/button_delivered"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:background="@drawable/rect_rounded_white_with_border"
+                        android:backgroundTint="@color/colorAccent"
+                        android:visibility="gone"
+                        android:text="تم الإستلام" />-->
+                </RelativeLayout>
+
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_messages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/appBarLayout"
+        android:layout_above="@+id/relativeLayout_message"
+        />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+
+        >
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_send_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:srcCompat="@drawable/ic_image_black_24dp"
+            android:tint="@color/colorPrimaryDark"
+            app:fabSize="mini"/>
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/editText_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:padding="8dp"
+            android:paddingEnd="40dp"
+            android:layout_toEndOf="@+id/fab_send_image"
+            android:background="@drawable/rect_oval_white"
+            android:elevation="2dp"
+            android:hint="أكتب رسالة..."
+             />
+
+        <ImageView
+            android:id="@+id/imageView_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="24dp"
+            android:elevation="2dp"
+            android:src="@drawable/ic_send_black_24dp" />
+
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

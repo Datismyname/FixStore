@@ -1,0 +1,59 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">FixStore</string>
+    <string name="fix">صيانة</string>
+    <string name="store">مبيعات</string>
+    <string name="continue_and_sign_in">Continue &amp; Sign In</string>
+
+    <!--repair shop-->
+    <string name="title_activity_maps" tools:ignore="ExtraTranslation">Map</string>
+
+    <!--brands-->
+    <string name="apple">Apple</string>
+    <string name="samsung">Samsung</string>
+    <string name="huawei">Huawei</string>
+    <!--end of brands-->
+
+    <!--problems-->
+    <string name="screen_title">Screen</string>
+    <string name="screen_description">Screen is broken, black or touch problems</string>
+    <string name="battery_title">Battery</string>
+    <string name="battery_description">Battery drain very fast</string>
+    <string name="other_title">Other problems?</string>
+    <string name="other_description">Not working properly or not working at all</string>
+    <!--End of problems-->
+
+
+    <!--problem description-->
+    <string name="phone_type">نوع الجوال</string>
+    <string name="phone_number_optional">رقم الجوال (إختياري)</string>
+    <string name="problem_description">وصف المشكلة</string>
+    <string name="send_order_button">أرسل الطلب</string>
+    <!--End of problem description-->
+
+    <!--repair shop-->
+
+    <string name="shop_name">ثماني النواة للاتصالات</string>
+    <string name="shop_distance">1.5 كيلو متر</string>
+
+    <!--End of repair shop-->
+
+
+    <!--End of repair shop-->
+
+    <string name="tab_text_1">توصيل (ارسل للكل)</string>
+    <string name="tab_text_2">توجه لأقرب محل</string>
+    <string name="tab_text_3">الأعلى تقييماً</string>
+
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
+    <string name="title_activity_find_store">FindStoreActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_find_by_maps">Map</string>
+    <string name="title_activity_main_tow">MainTowActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Fix Store</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+</resources>
