@@ -84,44 +84,69 @@ class ChatActivity : AppCompatActivity() {
 
             updateOrderStatusUI()
 
+            toolbar_chat_first_layer.post {
 
-            button_delivery.setOnClickListener {
+                val toolbarViewWidth = toolbar_chat_first_layer.width.toFloat()
+
+
+                toolbar_chat_second_layer.visibility = View.VISIBLE
+
+                //now move it to the right side out of the screen
+                toolbar_chat_second_layer.animate()
+                        .translationX( 2*toolbarViewWidth )
+                        .setDuration(0)
 
 
 
-                when( orderStatus.toInt() ){
+                button_delivery.setOnClickListener {
 
-                    2 -> {
 
-                        FirestoreUtil.updateRepairOrder(orderId, mapOf("orderStatus" to 3)) {
-                            orderStatus = "3"
-                            updateOrderStatusUI()
 
+                    when( orderStatus.toInt() ){
+
+                        2 -> {
+
+                            FirestoreUtil.updateRepairOrder(orderId, mapOf("orderStatus" to 3)) {
+                                orderStatus = "3"
+
+                                // move first toolbar to the left to be out of the screen
+                                toolbar_chat_first_layer.animate()
+                                        .translationXBy(-1 * toolbarViewWidth  )
+                                        .setDuration(500)
+
+                                // move second toolbar to the left to be shown on the screen
+                                toolbar_chat_second_layer.animate()
+                                        .translationX(0.0f)
+                                        .setDuration(500)
+
+
+                            }
 
                         }
 
-                    }
+                        in 3..4-> {
 
-                    in 3..4-> {
+                            FirestoreUtil.updateRepairOrder( orderId, mapOf("orderStatus" to 6) ){
+                                orderStatus = "6"
+                                updateOrderStatusUI()
 
-                        FirestoreUtil.updateRepairOrder( orderId, mapOf("orderStatus" to 6) ){
-                            orderStatus = "6"
-                            updateOrderStatusUI()
 
+                            }
 
                         }
-
-                    }
 //
-                    else -> { }
+                        else -> { }
+
+
+
+                    }
 
 
 
                 }
 
-
-
             }
+
 
            /* button_delivered.setOnClickListener {
 

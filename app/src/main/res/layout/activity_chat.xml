@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
-        <android.support.v7.widget.Toolbar android:id="@+id/toolbar_chat"
+        <RelativeLayout android:id="@+id/toolbar_chat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
@@ -23,8 +23,17 @@
 
 
                 <RelativeLayout
+                    android:id="@+id/toolbar_chat_first_layer"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/cancel_delivery"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:theme="@style/AppTheme.Button.Cancel"
+                        android:text="إلغاء"/>
                     <TextView
                         android:id="@+id/textView_status"
                         android:layout_width="wrap_content"
@@ -37,12 +46,12 @@
                         android:id="@+id/imageView_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
+
                     <android.support.v7.widget.AppCompatButton
                         android:id="@+id/button_delivery"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:soundEffectsEnabled="true"
                         android:theme="@style/AppTheme.Button"
                         android:text="تم التسليم" />
 
@@ -58,8 +67,54 @@
                         android:text="تم الإستلام" />-->
                 </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/toolbar_chat_second_layer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
 
-        </android.support.v7.widget.Toolbar>
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/cancel_delivered"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:theme="@style/AppTheme.Button.Cancel"
+                    android:text="إلغاء"/>
+                <TextView
+                    android:id="@+id/textView_second_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:layout_centerHorizontal="true"
+                    android:text="في انتظار استلام الجوال للمحل"/>
+
+                <ImageView
+                    android:id="@+id/imageView_second_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/button_delivered"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:theme="@style/AppTheme.Button"
+                    android:text="تم الاستلام" />
+
+
+                <!--<Button
+                    android:id="@+id/button_delivered"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/rect_rounded_white_with_border"
+                    android:backgroundTint="@color/colorAccent"
+                    android:visibility="gone"
+                    android:text="تم الإستلام" />-->
+            </RelativeLayout>
+
+
+        </RelativeLayout>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -77,6 +132,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:paddingTop="8dp"
 
         >
         <android.support.design.widget.FloatingActionButton
