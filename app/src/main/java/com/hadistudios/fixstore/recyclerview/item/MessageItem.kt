@@ -31,7 +31,7 @@ abstract class MessageItem(private val message: Message): Item(){
             viewHolder.message_root.apply {
 
                 backgroundResource = R.drawable.rect_round_white
-                this.layoutParams = FrameLayout.LayoutParams(wrapContent, wrapContent, Gravity.END)
+                this.layoutParams = FrameLayout.LayoutParams(wrapContent, wrapContent, Gravity.START)
 
             }
         }else{
@@ -39,7 +39,7 @@ abstract class MessageItem(private val message: Message): Item(){
             viewHolder.message_root.apply {
 
                 backgroundResource = R.drawable.rect_round_primary_color
-                this.layoutParams = FrameLayout.LayoutParams(wrapContent, wrapContent, Gravity.START)
+                this.layoutParams = FrameLayout.LayoutParams(wrapContent, wrapContent, Gravity.END)
 
             }
 

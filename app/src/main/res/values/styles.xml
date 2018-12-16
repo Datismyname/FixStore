@@ -26,4 +26,9 @@
         <item name="android:textColor">@color/White</item>
     </style>
 
+    <style name="AppTheme.Button.Cancel" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@drawable/button_cancel_states</item>
+        <item name="android:textColor">@color/White</item>
+    </style>
+
 </resources>
