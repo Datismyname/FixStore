@@ -87,7 +87,7 @@ class OrderRespondedStoresActivity : AppCompatActivity() {
             alert("عرض \"${item.repairShopName}\" هو ${item.repairShopPrice} ريال، هل أنت متأكد من هذا العرض؟"){
                 positiveButton("نعم") {
 
-                    FirestoreUtil.updateRepairOrder( repairOrderId!!, mapOf( "orderStatus" to 2 , "acceptedStoreName" to item.repairShopName, "acceptedStoreId" to item.repairShopId ) ){
+                    FirestoreUtil.updateRepairOrder( repairOrderId!!, mapOf( "orderStatus" to  mutableMapOf( "codeName" to "accepted",  "codeNumber" to 2 ) , "acceptedStoreName" to item.repairShopName, "acceptedStoreId" to item.repairShopId ) ){
 
                         this@OrderRespondedStoresActivity.startActivity<ChatActivity>(
 

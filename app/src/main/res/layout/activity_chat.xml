@@ -20,7 +20,6 @@
             android:background="@color/colorPrimary"
             android:minHeight="?android:attr/actionBarSize"
             app:popupTheme="@style/AppTheme.PopupOverlay">
-<!--Before update your uncommitted changes were saved to stash. Update is not complete, you have unresolved merges in your working tree Resolve conflicts, complete update and restore changes manually-->
 
                 <RelativeLayout
                     android:id="@+id/toolbar_chat_first_layer"

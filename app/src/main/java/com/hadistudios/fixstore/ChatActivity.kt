@@ -106,7 +106,7 @@ class ChatActivity : AppCompatActivity() {
 
                         2 -> {
 
-                            FirestoreUtil.updateRepairOrder(orderId, mapOf("orderStatus" to 3)) {
+                            FirestoreUtil.updateRepairOrder(orderId, mapOf("orderStatus" to  mutableMapOf( "codeName" to "wait for delivery",  "codeNumber" to 3) ) ) {
                                 orderStatus = "3"
 
                                 // move first toolbar to the left to be out of the screen
@@ -126,7 +126,7 @@ class ChatActivity : AppCompatActivity() {
 
                         in 3..4-> {
 
-                            FirestoreUtil.updateRepairOrder( orderId, mapOf("orderStatus" to 6) ){
+                            FirestoreUtil.updateRepairOrder( orderId, mapOf("orderStatus" to  mutableMapOf( "codeName" to "delivered",  "codeNumber" to 6 ) ) ){
                                 orderStatus = "6"
                                 updateOrderStatusUI()
 

@@ -121,7 +121,7 @@ object FirestoreUtil {
                 "problemTitle" to title,
                 "problemPreDescription" to preDescription,
                 "problemDescription" to description,
-                "orderStatus" to 0,
+                "orderStatus" to  mutableMapOf( "codeName" to "new",  "codeNumber" to 0 ),
                 "userId" to currentUserDocRef.id,
                 "orderTime" to FieldValue.serverTimestamp()
         )
@@ -149,7 +149,7 @@ object FirestoreUtil {
 
         val userId = FirebaseAuth.getInstance().currentUser!!.uid
 
-        return repairOrdersCollectionReference.whereEqualTo("userId", userId).whereGreaterThan("orderStatus", 0 )
+        return repairOrdersCollectionReference.whereEqualTo("userId", userId).whereGreaterThan("orderStatus.codeNumber", 0 )
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
 
                     if (firebaseFirestoreException != null) {
@@ -169,7 +169,7 @@ object FirestoreUtil {
                                 it.getString("problemTitle")!!,
                                 it.getString("problemPreDescription")!!,
                                 it.getString("problemDescription")!!,
-                                it.getLong("orderStatus")!!.toInt(),
+                                it.getLong("orderStatus.codeNumber")!!.toInt(),
                                 it.getString("userId"),
                                 it.getDate("orderTime"),
                                 it.getString("acceptedStoreName"),
