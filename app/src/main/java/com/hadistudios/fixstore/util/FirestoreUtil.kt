@@ -149,7 +149,7 @@ object FirestoreUtil {
 
         val userId = FirebaseAuth.getInstance().currentUser!!.uid
 
-        return repairOrdersCollectionReference.whereEqualTo("userId", userId).whereGreaterThan("orderStatus.codeNumber", 0 )
+        return repairOrdersCollectionReference.whereEqualTo("userId", userId).whereGreaterThan("orderStatus.codeNumber", 0 ).whereLessThanOrEqualTo("orderStatus.codeNumber", 6 )
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
 
                     if (firebaseFirestoreException != null) {

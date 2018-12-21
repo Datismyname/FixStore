@@ -77,16 +77,27 @@ class RepairOrdersHistoryActivity : AppCompatActivity() {
 
         if ( item is RepairOrdersHistoryItem ){
 
+            if ( item.order.orderStatus == 1 ){
 
-            this.startActivity<ChatActivity>(
+                startActivity<OrderRespondedStoresActivity>(
+                        RepairConstants.REPAIR_ORDER_ID to item.order.repairOrderId
+                )
 
-                    AppConstants.USER_NAME to item.order.acceptedStoreName,
-                    AppConstants.USER_ID to item.order.acceptedStoreId,
-                    RepairConstants.REPAIR_ORDER_ID to item.order.repairOrderId,
-                    RepairConstants.REPAIR_ORDER_STATUS to item.order.orderStatus.toString()
+            }else{
+
+                this.startActivity<ChatActivity>(
+
+                        AppConstants.USER_NAME to item.order.acceptedStoreName,
+                        AppConstants.USER_ID to item.order.acceptedStoreId,
+                        RepairConstants.REPAIR_ORDER_ID to item.order.repairOrderId,
+                        RepairConstants.REPAIR_ORDER_STATUS to item.order.orderStatus.toString()
 
 
-            )
+                )
+
+            }
+
+
 
 
         }

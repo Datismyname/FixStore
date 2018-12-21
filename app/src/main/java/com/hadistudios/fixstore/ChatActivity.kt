@@ -19,12 +19,13 @@ import com.hadistudios.fixstore.util.StorageUtil
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ListenerRegistration
 import com.hadistudios.fixstore.repairshop.RepairConstants
+import com.hadistudios.fixstore.repairshop.RepairOrdersHistoryActivity
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Section
 import com.xwray.groupie.ViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
 import kotlinx.android.synthetic.main.activity_chat.*
-import org.jetbrains.anko.toast
+import org.jetbrains.anko.*
 import java.io.ByteArrayOutputStream
 import java.util.*
 
@@ -58,6 +59,7 @@ class ChatActivity : AppCompatActivity() {
         otherUserId = intent.getStringExtra( AppConstants.USER_ID )
         orderId = intent.getStringExtra( RepairConstants.REPAIR_ORDER_ID )
         orderStatus = intent.getStringExtra( RepairConstants.REPAIR_ORDER_STATUS )
+        updateOrderStatusUI()
 
         FirestoreUtil.getOrCreateChatChannel( otherUserId, orderId ){ channelId ->
 
@@ -82,7 +84,6 @@ class ChatActivity : AppCompatActivity() {
 
 
 
-            updateOrderStatusUI()
 
             toolbar_chat_first_layer.post {
 
@@ -106,8 +107,8 @@ class ChatActivity : AppCompatActivity() {
 
                         2 -> {
 
-                            FirestoreUtil.updateRepairOrder(orderId, mapOf("orderStatus" to  mutableMapOf( "codeName" to "wait for delivery",  "codeNumber" to 3) ) ) {
-                                orderStatus = "3"
+                            FirestoreUtil.updateRepairOrder(orderId, mapOf("orderStatus" to  mutableMapOf( "codeName" to "wait for delivery",  "codeNumber" to 4) ) ) {
+                                orderStatus = "4"
 
                                 // move first toolbar to the left to be out of the screen
                                 toolbar_chat_first_layer.animate()
@@ -173,6 +174,10 @@ class ChatActivity : AppCompatActivity() {
 
         }
 //
+    }
+
+    override fun onBackPressed() {
+        startActivity( intentFor<RepairOrdersHistoryActivity>().newTask().clearTask() )
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -7,6 +7,7 @@ import android.util.Log
 import com.google.firebase.firestore.ListenerRegistration
 import com.hadistudios.fixstore.AppConstants
 import com.hadistudios.fixstore.ChatActivity
+import com.hadistudios.fixstore.MainActivity
 import com.hadistudios.fixstore.R
 import com.hadistudios.fixstore.repairshop.recyclerview.item.OrderRespondedStoresItem
 import com.hadistudios.fixstore.util.FirestoreUtil
@@ -16,10 +17,7 @@ import com.xwray.groupie.Section
 import com.xwray.groupie.kotlinandroidextensions.Item
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import kotlinx.android.synthetic.main.activity_order_responded_stores.*
-import org.jetbrains.anko.alert
-import org.jetbrains.anko.noButton
-import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.yesButton
+import org.jetbrains.anko.*
 
 class OrderRespondedStoresActivity : AppCompatActivity() {
 
@@ -41,6 +39,14 @@ class OrderRespondedStoresActivity : AppCompatActivity() {
                 respondsListenerRegistration = FirestoreUtil.addStoresRespondsListener(repairOrderId!!, this::updateRecyclerView)
 
 
+
+
+
+    }
+
+    override fun onBackPressed() {
+
+        startActivity( intentFor<RepairOrdersHistoryActivity>().newTask().clearTask() )
 
 
 
