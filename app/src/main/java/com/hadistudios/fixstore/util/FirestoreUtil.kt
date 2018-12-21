@@ -188,7 +188,7 @@ object FirestoreUtil {
 
     }
 
-    fun addStoresRespondsListener( orderId:String, onListen: (List<Item>) -> Unit ): ListenerRegistration{
+    fun addStoresRespondsListener( orderId:String, onListen: ( List<OrderRespondedStoresItem>) -> Unit ): ListenerRegistration{
 
 
         return repairOrdersCollectionReference.document( orderId ).collection("orderOffers")
@@ -199,7 +199,7 @@ object FirestoreUtil {
                         return@addSnapshotListener
                     }
 
-                    val items = mutableListOf<Item>()
+                    val items = mutableListOf<OrderRespondedStoresItem>()
                     var store: Map<*,*>
 
                     querySnapshot!!.forEach{

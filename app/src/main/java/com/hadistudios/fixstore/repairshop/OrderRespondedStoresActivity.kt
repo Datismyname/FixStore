@@ -9,6 +9,8 @@ import com.hadistudios.fixstore.AppConstants
 import com.hadistudios.fixstore.ChatActivity
 import com.hadistudios.fixstore.MainActivity
 import com.hadistudios.fixstore.R
+import com.hadistudios.fixstore.model.User
+import com.hadistudios.fixstore.recyclerview.item.PersonItem
 import com.hadistudios.fixstore.repairshop.recyclerview.item.OrderRespondedStoresItem
 import com.hadistudios.fixstore.util.FirestoreUtil
 import com.xwray.groupie.GroupAdapter
@@ -53,9 +55,15 @@ class OrderRespondedStoresActivity : AppCompatActivity() {
     }
 
 
-    private fun updateRecyclerView( items: List<Item> ){
+    private fun updateRecyclerView( items: List<OrderRespondedStoresItem> ){
 
         fun init(){
+
+            button_sort_by_nearest.setOnClickListener{ items.sortedBy { item -> item.repairShopName } }
+            button_sort_by_rating.setOnClickListener { items.sortedBy { item -> item.repairShopRating } }
+            button_sort_by_price.setOnClickListener { items.sortedBy { item -> item.repairShopPrice } }
+
+            button_sort_by_nearest.performClick()
 
             recycler_view_order_respond.apply {
                 layoutManager = LinearLayoutManager(this@OrderRespondedStoresActivity)
@@ -119,6 +127,8 @@ class OrderRespondedStoresActivity : AppCompatActivity() {
         }
 
     }
+
+
 
 
 

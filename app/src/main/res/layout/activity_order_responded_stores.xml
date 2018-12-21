@@ -1,12 +1,58 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hadistudios.fixstore.repairshop.ChooseBrandActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.hadistudios.fixstore.repairshop.ChooseBrandActivity"
+    android:layoutDirection="rtl">
+
+    <RelativeLayout
+        android:id="@+id/sorting_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/textView_sorting_by"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="رتب حسب: "/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/textView_sorting_by">
+
+        <Button
+            android:id="@+id/button_sort_by_nearest"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:gravity="center"
+            android:text="الأقرب"
+            />
+
+        <Button
+            android:id="@+id/button_sort_by_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:text="التقييم"
+            />
+
+            <Button
+                android:id="@+id/button_sort_by_price"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:text="السعر" />
+        </RelativeLayout>
+
+    </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_order_respond"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/sorting_bar"
+        app:layout_behavior= "@string/appbar_scrolling_view_behavior"/>
 
-</FrameLayout>
+</RelativeLayout>
