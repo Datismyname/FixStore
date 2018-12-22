@@ -26,18 +26,7 @@ import org.jetbrains.anko.*
 
 class OrderRespondedStoresActivity : AppCompatActivity() {
 
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var locationCallback: LocationCallback
-    private lateinit var locationRequest: LocationRequest
-    private var lastLocation: Location? =null
-    private var shopLocation:Location? = null
-    private var initShopLocation = true
-    private var locationUpdateState = false
 
-    companion object {
-        private const val LOCATION_PERMISSION_REQUEST_CODE = 1
-        private const val REQUEST_CHECK_SETTINGS = 2
-    }
 
 
 
@@ -57,42 +46,23 @@ class OrderRespondedStoresActivity : AppCompatActivity() {
             if ( !repairOrderId.isNullOrEmpty() )
                 respondsListenerRegistration = FirestoreUtil.addStoresRespondsListener(repairOrderId!!){ items ->
 
+
+
+
+
+
                     button_sort_by_nearest.setOnClickListener{
 
-                        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-
-
-                        locationCallback = object : LocationCallback() {
-                            override fun onLocationResult(locationResult: LocationResult) {
-                                super.onLocationResult(locationResult)
-
-                                lastLocation = locationResult.lastLocation
-
-                                if ( initShopLocation ){
-                                    shopLocation = locationResult.lastLocation
-                                    initShopLocation = false
-                                }
-
-                            }
-                        }
-
-
-
-                        createLocationRequest()
 
                         items.forEach{ orderRespondedStoresItem ->
 
-                            if ( shopLocation != null ) {
-                                shopLocation!!.latitude = orderRespondedStoresItem.repairShop.location.latitude
-                                shopLocation!!.longitude = orderRespondedStoresItem.repairShop.location.longitude
-                            }
 
-                            if ( lastLocation != null )
-                            orderRespondedStoresItem.distance = lastLocation!!.distanceTo( shopLocation ).toString()
+
 
                         }
 
-                        updateRecyclerView( items.sortedBy { orderRespondedStoresItem -> orderRespondedStoresItem.distance } )
+
+                        updateRecyclerView( items.sortedBy { orderRespondedStoresItem -> orderRespondedStoresItem.distance }.asReversed() )
 
                     }
 
@@ -106,7 +76,7 @@ class OrderRespondedStoresActivity : AppCompatActivity() {
 
                     }
 
-                    button_sort_by_nearest.performClick()
+                    //button_sort_by_nearest.performClick()
 
 
                 }
@@ -202,87 +172,7 @@ class OrderRespondedStoresActivity : AppCompatActivity() {
 
 
 
-    private fun startLocationUpdates() {
-        //1
-        if (ActivityCompat.checkSelfPermission(this,
-                        android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
-                    LOCATION_PERMISSION_REQUEST_CODE)
-            return
-        }
-        //2
-        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null /* Looper */)
-    }
 
-
-
-    private fun createLocationRequest() {
-        // 1
-        locationRequest = LocationRequest()
-        // 2
-        locationRequest.interval = 5000
-        // 3
-        locationRequest.fastestInterval = 2500
-        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-
-        val builder = LocationSettingsRequest.Builder()
-                .addLocationRequest(locationRequest)
-
-        // 4
-        val client = LocationServices.getSettingsClient(this)
-        val task = client.checkLocationSettings(builder.build())
-
-        // 5
-        task.addOnSuccessListener {
-            locationUpdateState = true
-            startLocationUpdates()
-        }
-        task.addOnFailureListener { e ->
-            // 6
-            if (e is ResolvableApiException) {
-                // Location settings are not satisfied, but this can be fixed
-                // by showing the user a dialog.
-                try {
-                    // Show the dialog by calling startResolutionForResult(),
-                    // and check the result in onActivityResult().
-                    e.startResolutionForResult(this,
-                            REQUEST_CHECK_SETTINGS)
-                } catch (sendEx: IntentSender.SendIntentException) {
-                    // Ignore the error.
-                }
-            }
-        }
-    }
-
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == REQUEST_CHECK_SETTINGS) {
-            if (resultCode == Activity.RESULT_OK) {
-                locationUpdateState = true
-                startLocationUpdates()
-            }
-        }
-
-    }
-
-
-    // 2
-    override fun onPause() {
-        super.onPause()
-        fusedLocationClient.removeLocationUpdates(locationCallback)
-    }
-
-    // 3
-    override fun onResume() {
-        super.onResume()
-        if (locationUpdateState) {
-            startLocationUpdates()
-        }
-
-    }
 
 
 
