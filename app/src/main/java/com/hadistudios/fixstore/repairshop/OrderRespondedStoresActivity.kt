@@ -59,12 +59,12 @@ class OrderRespondedStoresActivity : AppCompatActivity() {
 
         fun init(){
 
-            button_sort_by_nearest.setOnClickListener{ items.sortedBy { item -> item.repairShopName } }
+            /*button_sort_by_nearest.setOnClickListener{ items.sortedBy { item -> item.repairShopName } }
             button_sort_by_rating.setOnClickListener { items.sortedBy { item -> item.repairShopRating } }
             button_sort_by_price.setOnClickListener { items.sortedBy { item -> item.repairShopPrice } }
 
             button_sort_by_nearest.performClick()
-
+*/
             recycler_view_order_respond.apply {
                 layoutManager = LinearLayoutManager(this@OrderRespondedStoresActivity)
 
@@ -83,6 +83,8 @@ class OrderRespondedStoresActivity : AppCompatActivity() {
         }
 
         fun update() = shopsSection.update(items)
+
+
 
         if ( shouldInitRecyclerView ){
             init()

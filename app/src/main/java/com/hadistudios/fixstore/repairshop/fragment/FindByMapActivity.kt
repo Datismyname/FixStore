@@ -9,6 +9,8 @@ import android.location.Location
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
+import android.support.v4.content.res.ResourcesCompat
+import android.support.v7.content.res.AppCompatResources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -357,7 +359,7 @@ class FindByMapActivity:Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
     private fun addShopsMarkers( repairShopItems: List<RepairShopItem> ){
 
         val shopMarkerIcon =  IconGenerator( context )
-        shopMarkerIcon.setBackground(resources.getDrawable( R.drawable.ic_five_stars ) )
+        shopMarkerIcon.setBackground(AppCompatResources.getDrawable( context!!, R.drawable.ic_five_stars ) )
 
         var shopMarker:Marker
 
