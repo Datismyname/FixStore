@@ -6,13 +6,16 @@ import com.xwray.groupie.kotlinandroidextensions.Item
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import kotlinx.android.synthetic.main.item_order_responded_stores.*
 
-class OrderRespondedStoresItem(val repairShopName: String, val repairShopRating:Double , val repairShopPrice:Double, val repairShopId: String ) : Item(){
+class OrderRespondedStoresItem(val repairShop: RepairShop, val repairShopOfferPrice:Double, val repairShopId: String ) : Item(){
+
+    var distance: String = ""
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
 
-        viewHolder.textView_shop_name.text = repairShopName
-        viewHolder.textView_price.text = repairShopPrice.toString() + " ريال "
-        viewHolder.imageView_rating.setImageResource( chooseRatingIcon( repairShopRating ) )
+        viewHolder.textView_shop_name.text = repairShop.name
+        viewHolder.textView_price.text = repairShopOfferPrice.toString() + " ريال "
+        viewHolder.textView_distance.text = distance
+        viewHolder.imageView_rating.setImageResource( chooseRatingIcon( repairShop.rating ) )
 
     }
 
@@ -20,9 +23,9 @@ class OrderRespondedStoresItem(val repairShopName: String, val repairShopRating:
 
 
 
-    private fun chooseRatingIcon(rating: Double ): Int{
+    private fun chooseRatingIcon(rating: Double? ): Int{
 
-        when (rating) {
+        when (rating!!) {
 
             in 0.0..0.4 -> return R.drawable.ic_five_stars
 
@@ -52,6 +55,7 @@ class OrderRespondedStoresItem(val repairShopName: String, val repairShopRating:
 
 
     }
+
 
 
 

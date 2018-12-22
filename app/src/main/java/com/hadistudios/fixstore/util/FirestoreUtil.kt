@@ -1,6 +1,7 @@
 package com.hadistudios.fixstore.util
 
 import android.content.Context
+import android.location.Location
 import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
@@ -200,13 +201,17 @@ object FirestoreUtil {
                     }
 
                     val items = mutableListOf<OrderRespondedStoresItem>()
-                    var store: Map<*,*>
+                    var store: RepairShop
+                    var storeLoaction:Location
 
                     querySnapshot!!.forEach{
 
-                        store = it.get("store") as Map<*, *>
+                        if ( it.getGeoPoint("store.location") != null ) {
+                            store = RepairShop(it.getString("store.name")!!, it.getDouble("store.rating"),it.getGeoPoint("store.location")!!)
+                            items.add( OrderRespondedStoresItem( store, it.getDouble("price")!!, it.id ) )
+                        }
 
-                        items.add( OrderRespondedStoresItem( store["name"].toString(), store["rating"].toString().toDouble(), it.getDouble("price")!!, it.id ) )
+
 
                     }
 

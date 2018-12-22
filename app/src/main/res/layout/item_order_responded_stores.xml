@@ -11,6 +11,7 @@
     app:cardBackgroundColor="@android:color/white"
     android:clickable="true"
     android:focusable="true"
+    android:layoutDirection="rtl"
     app:cardCornerRadius="4dp"
     app:cardElevation="4dp">
 
@@ -22,20 +23,17 @@
             android:id="@+id/imageView_rating"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="5dp"
             tools:src="@drawable/ic_rating_45" />
 
         <TextView
             android:id="@+id/textView_shop_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
             android:textAppearance="@style/Base.TextAppearance.AppCompat"
             android:textSize="20sp"
             tools:text="@string/shop_name" />
@@ -44,8 +42,20 @@
             android:id="@+id/textView_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:layout_alignParentEnd="true"
+            android:layout_marginStart="5dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView_shop_name"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+            tools:text="@string/shop_distance" />
+
+        <TextView
+            android:id="@+id/textView_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@+id/textView_price"
             android:layout_below="@+id/textView_shop_name"
             android:ellipsize="end"
             android:maxLines="1"
