@@ -190,7 +190,7 @@ object FirestoreUtil {
 
     }
 
-    fun addStoresRespondsListener( orderId:String,lastLocation: Location?, onListen: ( List<OrderRespondedStoresItem>) -> Unit ): ListenerRegistration{
+    fun addStoresRespondsListener( orderId:String, onListen: ( List<OrderRespondedStoresItem>) -> Unit ): ListenerRegistration{
 
 
         return repairOrdersCollectionReference.document( orderId ).collection("orderOffers")
@@ -209,7 +209,7 @@ object FirestoreUtil {
 
                         if ( it.getGeoPoint("store.location") != null ) {
                             store = RepairShop(it.getString("store.name")!!, it.getDouble("store.rating"),it.getGeoPoint("store.location")!!)
-                            items.add( OrderRespondedStoresItem( store, it.getDouble("price")!!, it.id, lastLocation ) )
+                            items.add( OrderRespondedStoresItem( store, it.getDouble("price")!!, it.id ) )
                         }
 
 

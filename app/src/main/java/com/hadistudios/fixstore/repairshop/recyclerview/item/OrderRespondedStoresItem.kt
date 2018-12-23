@@ -10,35 +10,38 @@ import com.google.android.gms.location.*
 import com.hadistudios.fixstore.R
 import com.hadistudios.fixstore.repairshop.OrderRespondedStoresActivity
 import com.hadistudios.fixstore.repairshop.model.RepairShop
+import com.hadistudios.fixstore.util.LocationUtil
 import com.xwray.groupie.kotlinandroidextensions.Item
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import kotlinx.android.synthetic.main.item_order_responded_stores.*
 import org.jetbrains.anko.toast
 
-class OrderRespondedStoresItem(val repairShop: RepairShop, val repairShopOfferPrice:Double, val repairShopId: String,val lastLocation: Location?) : Item(){
+class OrderRespondedStoresItem(val repairShop: RepairShop, val repairShopOfferPrice:Double, val repairShopId: String) : Item(){
 
-    var shopLocation = lastLocation
+    var shopLocation = Location(repairShop.name)
 
-    var distance: String = ""
+    var distance: Float = 0f
+    var distanceText: String = ""
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
 
-        if (shopLocation != null) {
-            shopLocation!!.latitude = repairShop.location.latitude
-            shopLocation!!.longitude = repairShop.location.longitude
+        shopLocation.latitude = repairShop.location.latitude
+        shopLocation.longitude = repairShop.location.longitude
+
+        if ( LocationUtil.lastLocation.latitude != 0.0 && LocationUtil.lastLocation.longitude != 0.0 )
+            distance = LocationUtil.lastLocation.distanceTo( shopLocation )
+
+        if ( distance > 0f && distance < 1000f ){
+            distanceText = "%.2f".format( distance ) + " متر"
+        }else if ( distance > 1000f ){
+            distanceText = "%.2f".format( (distance/1000) ) + " كم"
         }
 
-        if ( lastLocation != null)
-            distance = lastLocation!!.distanceTo( shopLocation ).toString()
-        else
 
 
-
-
-        Log.e("FIXSTOREe", "distance is $distance" )
         viewHolder.textView_shop_name.text = repairShop.name
         viewHolder.textView_price.text = repairShopOfferPrice.toString() + " ريال "
-        viewHolder.textView_distance.text = distance + "كم"
+        viewHolder.textView_distance.text = distanceText
         viewHolder.imageView_rating.setImageResource( chooseRatingIcon( repairShop.rating ) )
 
 
