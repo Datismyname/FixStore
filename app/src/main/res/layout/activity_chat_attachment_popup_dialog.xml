@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relativeLayout_chat_attachment_popup"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="25dp"
+    android:paddingBottom="25dp"
+    android:gravity="center"
+    android:layout_gravity="center"
+    android:layout_centerHorizontal="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFF"
+        android:layout_margin="5dp"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/layoutGallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_gallery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:srcCompat = "@drawable/ic_image_black_24dp"
+                android:tint="@color/colorPrimary"
+                android:background="#FFF"
+                app:fabSize="normal"
+                />
+
+            <TextView
+                android:id="@+id/tvGallery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="المعرض"
+                android:layout_marginTop="10dp"
+                android:textSize="16sp"
+                android:textColor="#4d4747"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:srcCompat = "@drawable/ic_camera_black_24dp"
+                android:tint="@color/colorPrimaryDark"
+                android:background="#FFF"
+                app:fabSize="normal"
+                />
+
+            <TextView
+                android:id="@+id/tvPhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="الكاميرا"
+                android:layout_marginTop="10dp"
+                android:textSize="16sp"
+                android:textColor="#4d4747"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutVideo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:srcCompat = "@drawable/ic_location_on_black_24dp"
+                android:tint="@color/colorPrimaryDark"
+                android:background="#FFF"
+                app:fabSize="normal"
+                />
+
+
+            <TextView
+                android:id="@+id/tvVideo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="الموقع"
+                android:layout_marginTop="10dp"
+                android:textSize="16sp"
+                android:textColor="#4d4747"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,6 +1,7 @@
 package com.hadistudios.fixstore
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.support.v7.app.AppCompatActivity
@@ -28,8 +29,20 @@ import kotlinx.android.synthetic.main.activity_chat.*
 import org.jetbrains.anko.*
 import java.io.ByteArrayOutputStream
 import java.util.*
+import com.hadistudios.fixstore.customview.FloatingView
+import android.widget.LinearLayout
+import android.content.Context.LAYOUT_INFLATER_SERVICE
+import android.os.Build
+import android.support.v4.content.ContextCompat.getSystemService
+import android.view.LayoutInflater
+import android.view.ViewAnimationUtils
+import android.opengl.ETC1.getHeight
+import android.opengl.ETC1.getWidth
+import com.hadistudios.fixstore.repairshop.MapActivity
+
 
 private const val RC_SELECT_IMAGE = 2
+private const val RC_CAPTURE_IMAGE = 3
 
 class ChatActivity : AppCompatActivity() {
 
@@ -49,7 +62,11 @@ class ChatActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+
         supportActionBar?.title = intent.getStringExtra( AppConstants.USER_NAME )
+
+
+
 
         FirestoreUtil.getCurrentUser {
             currentUser = it
@@ -62,6 +79,14 @@ class ChatActivity : AppCompatActivity() {
         updateOrderStatusUI()
 
         FirestoreUtil.getOrCreateChatChannel( otherUserId, orderId ){ channelId ->
+
+            if ( !intent.getStringExtra("USER_LOCATION").isNullOrEmpty() ){
+
+                val messageToSend = TextMessage( intent.getStringExtra("USER_LOCATION"), Calendar.getInstance().time,
+                        FirebaseAuth.getInstance().currentUser!!.uid, otherUserId, currentUser.name )
+
+                FirestoreUtil.sendMessage( messageToSend, channelId )
+            }
 
             currentChannelId = channelId
 
@@ -161,24 +186,84 @@ class ChatActivity : AppCompatActivity() {
 
             fab_send_image.setOnClickListener {
 
-                val intent = Intent().apply {
+                val layoutInflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+                // inflate the custom popup layout
+                val inflatedView: View
 
-                    type = "image/*"
-                    action = Intent.ACTION_GET_CONTENT
-                    putExtra( Intent.EXTRA_MIME_TYPES, arrayOf( "image/jpeg", "image/png" ) )
+                inflatedView = layoutInflater.inflate(R.layout.activity_chat_attachment_popup_dialog, null, false)
+
+
+                val layoutGallery = inflatedView.findViewById<View>(R.id.layoutGallery) as LinearLayout
+                val layoutPhoto = inflatedView.findViewById<View>(R.id.layoutPhoto) as LinearLayout
+                val layoutVideo = inflatedView.findViewById<View>(R.id.layoutVideo) as LinearLayout
+
+                layoutGallery.setOnClickListener {
+
+                    val intent = Intent().apply {
+
+                        type = "image/*"
+                        action = Intent.ACTION_GET_CONTENT
+                        putExtra( Intent.EXTRA_MIME_TYPES, arrayOf( "image/jpeg", "image/png" ) )
+
+                    }
+                    startActivityForResult(Intent.createChooser( intent, "Select image" ), RC_SELECT_IMAGE)
+                    FloatingView.dismissWindow()
+
 
                 }
-                startActivityForResult(Intent.createChooser( intent, "Select image" ), RC_SELECT_IMAGE)
+
+                layoutPhoto.setOnClickListener {
+
+                    val intent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+
+                    val permissions = arrayOf("android.permission.CAMERA")
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        requestPermissions(permissions, RC_CAPTURE_IMAGE)
+                    }
+
+                    startActivityForResult(intent, RC_CAPTURE_IMAGE)
+
+                    FloatingView.dismissWindow()
+
+                }
+
+
+                layoutVideo.setOnClickListener {
+
+                    startActivity<MapActivity>(
+                            AppConstants.USER_NAME to currentUser.name,
+                            AppConstants.USER_ID to otherUserId,
+                            RepairConstants.REPAIR_ORDER_ID to orderId,
+                            RepairConstants.REPAIR_ORDER_STATUS to orderStatus
+                    )
+                }
+
+                FloatingView.onShowPopup(this, inflatedView)
+
+
+
+                /*relativeLayout_attachment.animate()
+                        .translationY(0.0f)
+                        .duration = 500*/
+
+
+
+
 
             }
 
         }
-//
+
     }
+
+
 
     override fun onBackPressed() {
         startActivity( intentFor<RepairOrdersHistoryActivity>().newTask().clearTask() )
     }
+
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
@@ -191,9 +276,11 @@ class ChatActivity : AppCompatActivity() {
 
         return super.onOptionsItemSelected(item)
     }
+
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-        if ( requestCode == RC_SELECT_IMAGE && resultCode == Activity.RESULT_OK && data != null && data.data != null ){
+        if ( requestCode == RC_SELECT_IMAGE && resultCode == Activity.RESULT_OK && data != null  ){
 
             val selectedImagePath = data.data
 
@@ -214,7 +301,34 @@ class ChatActivity : AppCompatActivity() {
             }
 
 
+        }else if( requestCode == RC_CAPTURE_IMAGE && resultCode == Activity.RESULT_OK && data != null && data.extras != null ){
+
+            if ( data.extras!!.get("data") != null ){
+
+
+                val selectedImageBitMap = data.extras!!.get("data") as Bitmap
+
+                val outputStream = ByteArrayOutputStream()
+
+                selectedImageBitMap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream)
+
+                val selectedImageBytes = outputStream.toByteArray()
+
+                StorageUtil.uploadMessageImage(selectedImageBytes){ imagePath ->
+
+                    val messageToSend = ImageMessage( imagePath, Calendar.getInstance().time,
+                            FirebaseAuth.getInstance().currentUser!!.uid, otherUserId, currentUser.name )
+
+                    FirestoreUtil.sendMessage( messageToSend, currentChannelId )
+                }
+
+
+
+
+            }
+
         }
+
 
     }
 

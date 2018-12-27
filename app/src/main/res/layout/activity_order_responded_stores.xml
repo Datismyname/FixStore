@@ -15,6 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
             android:text="رتب حسب: "/>
         <RelativeLayout
             android:layout_width="match_parent"
@@ -27,6 +28,7 @@
             android:layout_height="40dp"
             android:layout_alignParentStart="true"
             android:gravity="center"
+            app:backgroundTintMode="screen"
             android:text="الأقرب"
             />
 
@@ -35,6 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_centerInParent="true"
+            app:backgroundTintMode="screen"
             android:text="التقييم"
             />
 
@@ -43,6 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_alignParentEnd="true"
+                app:backgroundTintMode="screen"
                 android:text="السعر" />
         </RelativeLayout>
 

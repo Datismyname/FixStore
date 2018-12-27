@@ -13,9 +13,7 @@ import android.util.Log
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.hadistudios.fixstore.repairshop.ChooseBrandActivity
-import com.hadistudios.fixstore.repairshop.OrderRespondedStoresActivity
 import com.hadistudios.fixstore.util.FirestoreUtil
-import com.hadistudios.fixstore.util.LocationUtil
 import com.hadistudios.fixstore.util.NavigationDrawerSelector
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_header.*
@@ -23,20 +21,16 @@ import org.jetbrains.anko.startActivity
 
 class MainActivity : AppCompatActivity() {
 
-    internal lateinit var fusedLocationClient: FusedLocationProviderClient
-    internal lateinit var locationCallback: LocationCallback
-    internal lateinit var locationRequest: LocationRequest
-
-    internal var shopLocation: Location? = null
-    internal var initShopLocation = true
-    internal var locationUpdateState = false
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var locationCallback: LocationCallback
+    private lateinit var locationRequest: LocationRequest
+    private var locationUpdateState = false
 
 
 
     companion object {
-        internal const val LOCATION_PERMISSION_REQUEST_CODE = 1
-        internal const val REQUEST_CHECK_SETTINGS = 2
-
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 1
+        private const val REQUEST_CHECK_SETTINGS = 2
     }
 
 
@@ -49,7 +43,6 @@ class MainActivity : AppCompatActivity() {
         val navView = nav_view_main
         val nds = NavigationDrawerSelector(this, drawerLayout)
 
-        LocationUtil.name = "h"
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         locationCallback = object : LocationCallback() {
@@ -59,9 +52,9 @@ class MainActivity : AppCompatActivity() {
 
                 if (locationResult.lastLocation != null && locationResult.lastLocation.latitude > 0 && locationResult.lastLocation.longitude > 0) {
 
-                    LocationUtil.lastLocation = locationResult.lastLocation
+                    UserLocationObject.lastLocation = locationResult.lastLocation
 
-                    Log.e("FIXSTOREee", "lastLocation: ${LocationUtil.lastLocation}")
+                    Log.e("FIXSTOREee", "lastLocation: ${UserLocationObject.lastLocation}")
                     fusedLocationClient.removeLocationUpdates(locationCallback)
 
                 }
@@ -113,13 +106,13 @@ class MainActivity : AppCompatActivity() {
 
 
 
-    internal fun createLocationRequest() {
+    private fun createLocationRequest() {
         // 1
         locationRequest = LocationRequest()
         // 2
-        locationRequest.interval = 1000
+        locationRequest.interval = 500
         // 3
-        locationRequest.fastestInterval = 500
+        locationRequest.fastestInterval = 250
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
 
         val builder = LocationSettingsRequest.Builder()

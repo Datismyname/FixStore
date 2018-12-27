@@ -23,6 +23,7 @@
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:paddingTop="4dp"
+            android:textIsSelectable="true"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
             tools:text="@string/lorem_ipsum" />
         <TextView

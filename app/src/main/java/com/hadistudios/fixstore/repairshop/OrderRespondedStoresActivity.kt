@@ -1,24 +1,14 @@
 package com.hadistudios.fixstore.repairshop
 
-import android.app.Activity
-import android.content.Intent
-import android.content.IntentSender
-import android.content.pm.PackageManager
-import android.location.Location
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.app.ActivityCompat
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
-import com.google.android.gms.common.api.ResolvableApiException
-import com.google.android.gms.location.*
 import com.google.firebase.firestore.ListenerRegistration
 import com.hadistudios.fixstore.AppConstants
 import com.hadistudios.fixstore.ChatActivity
 import com.hadistudios.fixstore.R
 import com.hadistudios.fixstore.repairshop.recyclerview.item.OrderRespondedStoresItem
 import com.hadistudios.fixstore.util.FirestoreUtil
-import com.hadistudios.fixstore.util.LocationUtil
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.OnItemClickListener
 import com.xwray.groupie.Section
@@ -51,16 +41,27 @@ class OrderRespondedStoresActivity : AppCompatActivity() {
 
                         button_sort_by_nearest.setOnClickListener {
                             updateRecyclerView( items.sortedBy { orderRespondedStoresItem -> orderRespondedStoresItem.distance } )
+
+                            button_sort_by_nearest.isEnabled = false
+                            button_sort_by_rating.isEnabled = true
+                            button_sort_by_price.isEnabled = true
                         }
 
                         button_sort_by_rating.setOnClickListener {
-                            updateRecyclerView( items.sortedBy { orderRespondedStoresItem -> orderRespondedStoresItem.repairShop.rating } )
+                            updateRecyclerView( items.sortedBy { orderRespondedStoresItem -> orderRespondedStoresItem.repairShop.rating }.asReversed() )
+
+                            button_sort_by_nearest.isEnabled = true
+                            button_sort_by_rating.isEnabled = false
+                            button_sort_by_price.isEnabled = true
+
                         }
 
                         button_sort_by_price.setOnClickListener {
-
                             updateRecyclerView( items.sortedBy { orderRespondedStoresItem -> orderRespondedStoresItem.repairShopOfferPrice } )
 
+                            button_sort_by_nearest.isEnabled = true
+                            button_sort_by_rating.isEnabled = true
+                            button_sort_by_price.isEnabled = false
                         }
 
                         button_sort_by_nearest.performClick()

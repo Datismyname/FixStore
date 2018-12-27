@@ -4,6 +4,7 @@
     package="com.hadistudios.fixstore">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -34,8 +35,7 @@
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".SignInActivity" />
-        <activity android:name=".ChatActivity"
-            >
+        <activity android:name=".ChatActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".repairshop.OrderRespondedStoresActivity" />
@@ -76,7 +76,14 @@
 
         <activity android:name=".repairshop.OrderRespondedStoresActivity" />
         <activity android:name=".repairshop.AllOrdersActivity" />
-        <activity android:name=".repairshop.RepairOrdersHistoryActivity"></activity>
+        <activity android:name=".repairshop.RepairOrdersHistoryActivity" />
+        <activity
+            android:name=".repairshop.MapActivity"
+            android:label="@string/title_activity_map">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ChatActivity" />
+        </activity>
     </application>
 
 </manifest>
