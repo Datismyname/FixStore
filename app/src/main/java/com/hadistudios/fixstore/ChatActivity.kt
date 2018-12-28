@@ -38,9 +38,12 @@ import android.view.LayoutInflater
 import android.view.ViewAnimationUtils
 import android.opengl.ETC1.getHeight
 import android.opengl.ETC1.getWidth
+import com.google.android.gms.location.places.ui.PlacePicker
+import com.hadistudios.fixstore.recyclerview.item.TextMessageItem
 import com.hadistudios.fixstore.repairshop.MapActivity
+import com.xwray.groupie.OnItemClickListener
 
-
+private const val RC_PLACE_PICKER = 1
 private const val RC_SELECT_IMAGE = 2
 private const val RC_CAPTURE_IMAGE = 3
 
@@ -80,13 +83,6 @@ class ChatActivity : AppCompatActivity() {
 
         FirestoreUtil.getOrCreateChatChannel( otherUserId, orderId ){ channelId ->
 
-            if ( !intent.getStringExtra("USER_LOCATION").isNullOrEmpty() ){
-
-                val messageToSend = TextMessage( intent.getStringExtra("USER_LOCATION"), Calendar.getInstance().time,
-                        FirebaseAuth.getInstance().currentUser!!.uid, otherUserId, currentUser.name )
-
-                FirestoreUtil.sendMessage( messageToSend, channelId )
-            }
 
             currentChannelId = channelId
 
@@ -231,12 +227,10 @@ class ChatActivity : AppCompatActivity() {
 
                 layoutVideo.setOnClickListener {
 
-                    startActivity<MapActivity>(
-                            AppConstants.USER_NAME to currentUser.name,
-                            AppConstants.USER_ID to otherUserId,
-                            RepairConstants.REPAIR_ORDER_ID to orderId,
-                            RepairConstants.REPAIR_ORDER_STATUS to orderStatus
-                    )
+                    val builder = PlacePicker.IntentBuilder()
+
+                    startActivityForResult( builder.build(this), RC_PLACE_PICKER )
+
                 }
 
                 FloatingView.onShowPopup(this, inflatedView)
@@ -280,7 +274,7 @@ class ChatActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-        if ( requestCode == RC_SELECT_IMAGE && resultCode == Activity.RESULT_OK && data != null  ){
+        if ( requestCode == RC_SELECT_IMAGE && resultCode == Activity.RESULT_OK && data != null && data.data != null  ){
 
             val selectedImagePath = data.data
 
@@ -327,10 +321,23 @@ class ChatActivity : AppCompatActivity() {
 
             }
 
+        }else if ( requestCode == RC_PLACE_PICKER && resultCode == Activity.RESULT_OK  ){
+
+            val place = PlacePicker.getPlace( this, data )
+            val locationUrl = "http://www.google.com/maps/search/?api=1&query=${place.latLng.latitude}%2C${place.latLng.longitude}"
+
+                val messageToSend = TextMessage( locationUrl , Calendar.getInstance().time,
+                        FirebaseAuth.getInstance().currentUser!!.uid, otherUserId, currentUser.name )
+
+                FirestoreUtil.sendMessage( messageToSend, currentChannelId )
+
+
+
         }
 
 
-    }
+
+        }
 
     private fun updateRecyclerView(messages: List<Item> ){
 
@@ -341,8 +348,14 @@ class ChatActivity : AppCompatActivity() {
                 adapter = GroupAdapter<ViewHolder>().apply {
 
                     messagesSection = Section( messages )
-                    this.add( messagesSection )
+
+                    add( messagesSection )
+
+
+
                 }
+
+
             }
 
             shouldInitRecyclerView = false
@@ -363,7 +376,6 @@ class ChatActivity : AppCompatActivity() {
         recycler_view_messages.scrollToPosition(recycler_view_messages.adapter!!.itemCount -1 )
 
     }
-
 
 
 

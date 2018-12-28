@@ -1,7 +1,6 @@
 package com.hadistudios.fixstore.recyclerview.item
 
 import android.content.Context
-import android.text.method.ArrowKeyMovementMethod
 import com.hadistudios.fixstore.R
 import com.hadistudios.fixstore.model.TextMessage
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
@@ -13,8 +12,6 @@ class TextMessageItem(val message:TextMessage, context: Context): MessageItem(me
     override fun bind(viewHolder: ViewHolder, position: Int) {
 
         viewHolder.textView_message_text.text = message.text
-        viewHolder.textView_message_text.setTextIsSelectable(true)
-        viewHolder.textView_message_text.movementMethod = ArrowKeyMovementMethod.getInstance()
 
         super.bind(viewHolder, position)
 
