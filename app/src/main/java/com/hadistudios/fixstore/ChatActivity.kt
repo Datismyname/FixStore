@@ -373,7 +373,11 @@ class ChatActivity : AppCompatActivity() {
 
 
 
-        recycler_view_messages.scrollToPosition(recycler_view_messages.adapter!!.itemCount -1 )
+
+        recycler_view_messages.apply {
+            layoutManager!!.smoothScrollToPosition(this, null, adapter!!.itemCount )
+
+        }
 
     }
 
